@@ -11,7 +11,7 @@ const CATEGORIAS = [
     emoji: "👰",
     candidatos: [
       { nome: "Douglas - CGF", foto: "DOUGLAS.jpg" },
-      { nome: "Luciana - CGT", foto: null },
+      { nome: "Luciana - CGT", foto: "LUCIANA.jpg" },
       
     ],
   },
@@ -31,7 +31,7 @@ const CATEGORIAS = [
     emoji: "🌽",
     candidatos: [
       { nome: "Manoela - CGF", foto: "MANOELA.jpg" },
-      { nome: "Priscila - GEBEP", foto: null },
+      { nome: "Priscila - GEBEP", foto: "priscila.jpg" },
       { nome: "Sarah Milena - CIF", foto: "MILENA.jpg" },
     ],
   },
@@ -50,7 +50,7 @@ const CATEGORIAS = [
     emoji: "⚖️",
     candidatos: [
       
-      { nome: "Nalessa - DGP", foto: null },
+      { nome: "Nalessa - DGP", foto: "nalessa.jpg" },
     ],
   },
   {
@@ -58,8 +58,8 @@ const CATEGORIAS = [
     titulo: "Delegado",
     emoji: "🚔",
     candidatos: [
-      { nome: "Treyce - DGP", foto: null },
-      { nome: "Ricardo - CIF", foto: null },
+      { nome: "Treyce - DGP", foto: "treyce.jpg" },
+      { nome: "Ricardo - CIF", foto: "ricardo.jpg" },
     ],
   },
 ];
