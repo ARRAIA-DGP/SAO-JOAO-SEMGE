@@ -50,7 +50,7 @@ const CATEGORIAS = [
     emoji: "⚖️",
     candidatos: [
       
-      { nome: "Nalessa - DGP", foto: "nalessa.jpg" },
+      { nome: "Nalessa - DGP", foto: "nalessa2.jpg" },
     ],
   },
   {
