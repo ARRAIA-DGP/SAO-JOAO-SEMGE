@@ -21,7 +21,7 @@ const CATEGORIAS = [
     emoji: "🤵",
     candidatos: [
       
-      { nome: "Martins - CGF", foto: null },
+      { nome: "Martins - CGF", foto: "martins.jpg" },
       { nome: "Armando - DGP", foto: "teste_armando.jpg" },
     ],
   },
