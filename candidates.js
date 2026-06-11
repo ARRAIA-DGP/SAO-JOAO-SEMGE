@@ -31,7 +31,7 @@ const CATEGORIAS = [
     emoji: "🌽",
     candidatos: [
       { nome: "Manoela - CGF", foto: "MANOELA.jpg" },
-      { nome: "Priscila - GEBEP", foto: "priscila.jpg" },
+      { nome: "Priscila - GEBEP", foto: "priscila2.jpg" },
       { nome: "Sarah Milena - CIF", foto: "MILENA.jpg" },
     ],
   },
@@ -59,7 +59,7 @@ const CATEGORIAS = [
     emoji: "🚔",
     candidatos: [
       { nome: "Treyce - DGP", foto: "treyce2.jpg" },
-      { nome: "Ricardo - CIF", foto: "ricardo.jpg" },
+      { nome: "Ricardo - CIF", foto: "ricardo2.jpg" },
     ],
   },
 ];
