@@ -10,9 +10,9 @@ const CATEGORIAS = [
     titulo: "Noiva",
     emoji: "👰",
     candidatos: [
-      { nome: "Candidata 1", foto: null },
-      { nome: "Candidata 2", foto: null },
-      { nome: "Armando Eigo Pimentel", foto: "teste_armando.jpg" },
+      { nome: "Douglas - CGF", foto: "DOUGLAS.jpg" },
+      { nome: "Luciana - CGT", foto: null },
+      
     ],
   },
   {
@@ -20,9 +20,9 @@ const CATEGORIAS = [
     titulo: "Noivo",
     emoji: "🤵",
     candidatos: [
-      { nome: "Candidato 1", foto: null },
-      { nome: "Candidato 2", foto: null },
-      { nome: "Armando Eigo Pimentel", foto: "teste_armando.jpg" },
+      
+      { nome: "Martins - CGF", foto: null },
+      { nome: "Armando - DGP", foto: "teste_armando.jpg" },
     ],
   },
   {
@@ -30,8 +30,9 @@ const CATEGORIAS = [
     titulo: "Rainha do Milho",
     emoji: "🌽",
     candidatos: [
-      { nome: "Candidata 1", foto: null },
-      { nome: "Candidata 2", foto: null },
+      { nome: "Manoela - CGF", foto: "MANOELA.jpg" },
+      { nome: "Priscila - GEBEP", foto: null },
+      { nome: "Sarah Milena - CIF", foto: "MILENA.jpg" },
     ],
   },
   {
@@ -39,8 +40,8 @@ const CATEGORIAS = [
     titulo: "Rei do Milho",
     emoji: "🌽",
     candidatos: [
-      { nome: "Candidato 1", foto: null },
-      { nome: "Candidato 2", foto: null },
+      { nome: "Heider - CGF", foto: "HEIDER.jpg" },
+      
     ],
   },
   {
@@ -48,8 +49,8 @@ const CATEGORIAS = [
     titulo: "Juiz",
     emoji: "⚖️",
     candidatos: [
-      { nome: "Candidato 1", foto: null },
-      { nome: "Candidato 2", foto: null },
+      
+      { nome: "Nalessa - DGP", foto: null },
     ],
   },
   {
@@ -57,8 +58,8 @@ const CATEGORIAS = [
     titulo: "Delegado",
     emoji: "🚔",
     candidatos: [
-      { nome: "Candidato 1", foto: null },
-      { nome: "Candidato 2", foto: null },
+      { nome: "Treyce - DGP", foto: null },
+      { nome: "Ricardo - CIF", foto: null },
     ],
   },
 ];
