@@ -58,7 +58,7 @@ const CATEGORIAS = [
     titulo: "Delegado",
     emoji: "🚔",
     candidatos: [
-      { nome: "Treyce - DGP", foto: "treyce.jpg" },
+      { nome: "Treyce - DGP", foto: "treyce2.jpg" },
       { nome: "Ricardo - CIF", foto: "ricardo.jpg" },
     ],
   },
