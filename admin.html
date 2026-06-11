@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Apuração — São João da SEMGE (restrito)</title>
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ceu:#1b2350;--ceu-2:#27306b;--papel:#fff6e5;--milho:#ffc53d;
+    --fogueira:#ff5a2b;--xadrez:#c92a2a;--verde:#3f9d6b;--tinta:#3a2c1a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Nunito',sans-serif;color:var(--papel);min-height:100vh;
+    background:linear-gradient(180deg,var(--ceu) 0%,var(--ceu-2) 100%);
+    padding:30px 16px 80px;
+  }
+  h1{font-family:'Rye',serif;font-weight:400;text-align:center;font-size:clamp(1.6rem,5vw,2.4rem)}
+  .sub{text-align:center;color:var(--milho);font-weight:800;letter-spacing:.15em;
+       text-transform:uppercase;font-size:.72rem;margin-bottom:26px}
+  .caixa{max-width:760px;margin:0 auto}
+  /* login */
+  #login{
+    background:var(--papel);color:var(--tinta);border-radius:14px;
+    max-width:380px;margin:30px auto;padding:26px;box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  #login label{font-weight:800;font-size:.85rem;display:block;margin:12px 0 4px}
+  #login input{
+    width:100%;padding:11px 12px;border:2px solid #e0d2b6;border-radius:8px;
+    font:inherit;background:#fffdf8;
+  }
+  #login input:focus{outline:2px solid var(--fogueira)}
+  #login button{
+    width:100%;margin-top:18px;border:none;cursor:pointer;color:#fff;
+    background:var(--fogueira);font-family:'Rye',serif;font-size:1.05rem;
+    padding:13px;border-radius:999px;box-shadow:0 4px 0 #b53a14;
+  }
+  .erro{display:none;color:#8a2a0e;background:#ffe1d6;border:2px solid var(--fogueira);
+        border-radius:8px;padding:10px;margin-top:14px;font-weight:700;font-size:.85rem;text-align:center}
+  /* painel */
+  #painel{display:none}
+  .resumo{
+    display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:26px;
+  }
+  .pill{
+    background:rgba(255,246,229,.1);border:1.5px solid rgba(255,246,229,.35);
+    border-radius:999px;padding:8px 18px;font-weight:800;font-size:.9rem;
+  }
+  .pill b{color:var(--milho)}
+  section.cat{
+    background:var(--papel);color:var(--tinta);border-radius:14px;
+    margin-bottom:20px;padding:20px 22px;box-shadow:0 10px 30px rgba(0,0,0,.3);
+  }
+  section.cat h2{font-family:'Rye',serif;font-weight:400;color:var(--xadrez);
+                 font-size:1.3rem;margin-bottom:14px}
+  .linha{margin-bottom:10px}
+  .linha .topo{display:flex;justify-content:space-between;font-weight:800;font-size:.92rem;margin-bottom:3px}
+  .barra{height:14px;border-radius:999px;background:#eee0c6;overflow:hidden}
+  .barra div{height:100%;background:var(--verde);border-radius:999px;min-width:2px;transition:width .4s ease}
+  .lider .barra div{background:var(--fogueira)}
+  .lider .topo{color:var(--fogueira)}
+  .acoes{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:26px}
+  .acoes button{
+    border:none;cursor:pointer;font-family:'Rye',serif;font-size:.95rem;color:#fff;
+    padding:11px 22px;border-radius:999px;
+  }
+  #btnAtualizar{background:var(--verde);box-shadow:0 4px 0 #2c7350}
+  #btnSair{background:#5b647e;box-shadow:0 4px 0 #3c4358}
+</style>
+</head>
+<body>
+  <h1>Apuração do Arraiá 🔥</h1>
+  <p class="sub">SEMGE · acesso restrito ao administrador</p>
+
+  <div id="login">
+    <label for="email">E-mail do administrador</label>
+    <input type="email" id="email" autocomplete="username">
+    <label for="senha">Senha</label>
+    <input type="password" id="senha" autocomplete="current-password">
+    <button id="btnEntrar">Entrar</button>
+    <p class="erro" id="erroLogin"></p>
+  </div>
+
+  <div id="painel" class="caixa">
+    <div class="resumo">
+      <span class="pill">Total de votantes: <b id="totalVotos">0</b></span>
+      <span class="pill">Última atualização: <b id="hora">—</b></span>
+    </div>
+    <div class="acoes">
+      <button id="btnAtualizar">Atualizar apuração</button>
+      <button id="btnSair">Sair</button>
+    </div>
+    <div id="resultados"></div>
+  </div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="config.js"></script>
+<script src="candidates.js"></script>
+<script>
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const auth = firebase.auth();
+
+  const $login = document.getElementById("login");
+  const $painel = document.getElementById("painel");
+  const $erro = document.getElementById("erroLogin");
+
+  document.getElementById("btnEntrar").addEventListener("click", entrar);
+  document.getElementById("senha").addEventListener("keydown", e => { if (e.key==="Enter") entrar(); });
+  document.getElementById("btnSair").addEventListener("click", () => auth.signOut());
+  document.getElementById("btnAtualizar").addEventListener("click", carregar);
+
+  async function entrar(){
+    $erro.style.display = "none";
+    try {
+      await auth.signInWithEmailAndPassword(
+        document.getElementById("email").value.trim(),
+        document.getElementById("senha").value
+      );
+    } catch (e) {
+      $erro.textContent = "E-mail ou senha incorretos.";
+      $erro.style.display = "block";
+    }
+  }
+
+  auth.onAuthStateChanged(user => {
+    if (user) { $login.style.display = "none"; $painel.style.display = "block"; carregar(); }
+    else { $login.style.display = "block"; $painel.style.display = "none"; }
+  });
+
+  async function carregar(){
+    const snap = await db.ref("votos").get();
+    const votos = snap.exists() ? Object.values(snap.val()) : [];
+
+    document.getElementById("totalVotos").textContent = votos.length;
+    document.getElementById("hora").textContent =
+      new Date().toLocaleTimeString("pt-BR",{hour:"2-digit",minute:"2-digit"});
+
+    const $res = document.getElementById("resultados");
+    $res.innerHTML = "";
+
+    CATEGORIAS.forEach(cat => {
+      const contagem = {};
+      cat.candidatos.forEach(c => contagem[c.nome] = 0);
+      votos.forEach(v => {
+        const nome = v.escolhas && v.escolhas[cat.id];
+        if (nome != null) contagem[nome] = (contagem[nome] || 0) + 1;
+      });
+      const ordenado = Object.entries(contagem).sort((a,b) => b[1]-a[1]);
+      const max = Math.max(1, ...ordenado.map(o => o[1]));
+      const maiorVoto = ordenado[0][1];
+
+      const sec = document.createElement("section");
+      sec.className = "cat";
+      sec.innerHTML = `<h2>${cat.emoji} ${cat.titulo}</h2>`;
+      ordenado.forEach(([nome, qtd]) => {
+        const div = document.createElement("div");
+        div.className = "linha" + (qtd === maiorVoto && qtd > 0 ? " lider" : "");
+        div.innerHTML = `
+          <div class="topo"><span>${nome}</span><span>${qtd} voto${qtd===1?"":"s"}</span></div>
+          <div class="barra"><div style="width:${(qtd/max)*100}%"></div></div>`;
+        sec.appendChild(div);
+      });
+      $res.appendChild(sec);
+    });
+  }
+</script>
+</body>
+</html>

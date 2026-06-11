@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>São João da SEMGE 2026 — Votação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rye&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ceu:#1b2350;        /* céu da noite junina */
+    --ceu-2:#27306b;
+    --papel:#fff6e5;      /* papel kraft claro dos cartões */
+    --milho:#ffc53d;
+    --fogueira:#ff5a2b;
+    --xadrez:#c92a2a;
+    --verde:#3f9d6b;
+    --tinta:#3a2c1a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Nunito',sans-serif;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(255,197,61,.12) 0 2px, transparent 3px),
+      radial-gradient(circle at 70% 8%,  rgba(255,255,255,.18) 0 1.5px, transparent 2.5px),
+      radial-gradient(circle at 85% 30%, rgba(255,197,61,.10) 0 2px, transparent 3px),
+      radial-gradient(circle at 40% 40%, rgba(255,255,255,.10) 0 1.5px, transparent 2.5px),
+      linear-gradient(180deg, var(--ceu) 0%, var(--ceu-2) 100%);
+    color:var(--papel);
+    min-height:100vh;
+  }
+  /* ---------- bandeirinhas ---------- */
+  .varal{display:block;width:100%;height:74px}
+  /* ---------- cabeçalho ---------- */
+  header{text-align:center;padding:8px 16px 28px}
+  .orgao{
+    letter-spacing:.22em;font-weight:800;font-size:.72rem;text-transform:uppercase;
+    color:var(--milho);
+  }
+  h1{
+    font-family:'Rye',serif;font-weight:400;
+    font-size:clamp(2rem,7vw,3.6rem);
+    color:var(--papel);line-height:1.05;margin:.35em 0 .2em;
+    text-shadow:0 3px 0 rgba(0,0,0,.35);
+  }
+  h1 .fogo{color:var(--milho)}
+  .sub{max-width:520px;margin:0 auto;font-size:1rem;opacity:.9}
+  /* ---------- categorias ---------- */
+  main{max-width:780px;margin:0 auto;padding:0 16px 80px}
+  section.categoria{
+    background:var(--papel);color:var(--tinta);
+    border-radius:14px;margin-bottom:28px;overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  .cat-topo{
+    background:
+      repeating-linear-gradient(45deg, var(--xadrez) 0 14px, transparent 14px 28px),
+      repeating-linear-gradient(-45deg, var(--xadrez) 0 14px, #fdebd2 14px 28px);
+    padding:6px;
+  }
+  .cat-titulo{
+    background:var(--papel);
+    display:flex;align-items:center;gap:10px;
+    padding:14px 18px;
+  }
+  .cat-titulo h2{font-family:'Rye',serif;font-weight:400;font-size:1.45rem;color:var(--xadrez)}
+  .cat-titulo .emoji{font-size:1.5rem}
+  .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;padding:18px}
+  .cand{
+    border:3px solid #e8d9bd;border-radius:12px;background:#fffdf8;
+    padding:14px 10px;text-align:center;cursor:pointer;
+    transition:transform .12s ease, border-color .12s ease, box-shadow .12s ease;
+  }
+  .cand:hover{transform:translateY(-3px)}
+  .cand:focus-visible{outline:3px solid var(--fogueira);outline-offset:2px}
+  .cand.sel{border-color:var(--verde);box-shadow:0 0 0 3px rgba(63,157,107,.25)}
+  .cand img,.cand .avatar{
+    width:96px;height:96px;border-radius:50%;object-fit:cover;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 10px;border:3px solid var(--milho);background:#fff;
+  }
+  .cand .avatar{font-family:'Rye',serif;font-size:2.2rem;color:var(--fogueira)}
+  .cand .nome{font-weight:800;font-size:.95rem}
+  .cand .check{
+    display:inline-block;margin-top:8px;font-size:.78rem;font-weight:800;
+    color:var(--verde);visibility:hidden;
+  }
+  .cand.sel .check{visibility:visible}
+  /* ---------- rodapé / botão ---------- */
+  .confirmar{
+    display:block;margin:10px auto 0;border:none;cursor:pointer;
+    font-family:'Rye',serif;font-size:1.25rem;color:#fff;
+    background:var(--fogueira);padding:16px 42px;border-radius:999px;
+    box-shadow:0 6px 0 #b53a14;transition:transform .1s ease, box-shadow .1s ease;
+  }
+  .confirmar:hover{transform:translateY(-2px)}
+  .confirmar:active{transform:translateY(3px);box-shadow:0 2px 0 #b53a14}
+  .confirmar:disabled{opacity:.55;cursor:not-allowed}
+  .aviso{
+    text-align:center;font-size:.85rem;opacity:.85;margin-top:18px;
+  }
+  /* ---------- tela de obrigado / erro ---------- */
+  .tela-final{display:none;text-align:center;padding:60px 20px}
+  .tela-final h2{font-family:'Rye',serif;font-size:2rem;color:var(--milho);margin-bottom:12px}
+  .tela-final p{max-width:460px;margin:0 auto;font-size:1.05rem}
+  .msg-erro{
+    display:none;background:#ffe1d6;color:#8a2a0e;border:2px solid var(--fogueira);
+    border-radius:10px;padding:12px 16px;margin:0 0 20px;font-weight:700;text-align:center;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- varal de bandeirinhas -->
+<svg class="varal" viewBox="0 0 800 74" preserveAspectRatio="none" aria-hidden="true">
+  <path d="M0,8 Q400,34 800,8" stroke="#fff6e5" stroke-width="2.5" fill="none"/>
+  <g>
+    <polygon points="30,12 70,14 50,52"  fill="#ffc53d"/>
+    <polygon points="110,16 150,18 130,56" fill="#c92a2a"/>
+    <polygon points="190,19 230,21 210,59" fill="#3f9d6b"/>
+    <polygon points="270,21 310,22 290,60" fill="#ff5a2b"/>
+    <polygon points="350,22 390,22 370,61" fill="#4d7bd6"/>
+    <polygon points="430,22 470,21 450,60" fill="#ffc53d"/>
+    <polygon points="510,21 550,19 530,58" fill="#c92a2a"/>
+    <polygon points="590,18 630,16 610,55" fill="#3f9d6b"/>
+    <polygon points="670,15 710,13 690,51" fill="#ff5a2b"/>
+    <polygon points="750,11 790,9 770,47" fill="#4d7bd6"/>
+  </g>
+</svg>
+
+<header>
+  <p class="orgao">Prefeitura de Salvador · SEMGE — Secretaria de Gestão de Pessoas</p>
+  <h1>Arraiá da <span class="fogo">SEMGE</span></h1>
+  <p class="sub">Escolha seus candidatos em cada categoria e confirme seu voto. Vale um voto por pessoa — e o resultado só sai no dia da festa! 🔥</p>
+</header>
+
+<main>
+  <p class="msg-erro" id="erro"></p>
+  <div id="categorias"></div>
+
+  <button class="confirmar" id="btnVotar">Confirmar meu voto</button>
+  <p class="aviso">Seu voto é secreto. As parciais ficam guardadas até a revelação no dia do evento.</p>
+
+  <div class="tela-final" id="obrigado">
+    <h2>Voto registrado! 🎉</h2>
+    <p>Valeu por participar do Arraiá da SEMGE. Agora é segurar a ansiedade: o resultado será revelado no dia da festa. Nos vemos lá!</p>
+  </div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="config.js"></script>
+<script src="candidates.js"></script>
+<script>
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  const JA_VOTOU_KEY = "semge_sj_votou_2026";
+  const escolhas = {}; // categoriaId -> nome do candidato
+
+  const $cats = document.getElementById("categorias");
+  const $btn = document.getElementById("btnVotar");
+  const $obrigado = document.getElementById("obrigado");
+  const $erro = document.getElementById("erro");
+
+  function telaObrigado(){
+    $cats.style.display = "none";
+    $btn.style.display = "none";
+    document.querySelector(".aviso").style.display = "none";
+    $obrigado.style.display = "block";
+  }
+
+  if (localStorage.getItem(JA_VOTOU_KEY)) {
+    telaObrigado();
+  } else {
+    montar();
+  }
+
+  function montar(){
+    CATEGORIAS.forEach(cat => {
+      const sec = document.createElement("section");
+      sec.className = "categoria";
+      sec.innerHTML = `
+        <div class="cat-topo"><div class="cat-titulo">
+          <span class="emoji">${cat.emoji}</span><h2>${cat.titulo}</h2>
+        </div></div>
+        <div class="grade" role="radiogroup" aria-label="${cat.titulo}"></div>`;
+      const grade = sec.querySelector(".grade");
+      cat.candidatos.forEach(c => {
+        const el = document.createElement("div");
+        el.className = "cand";
+        el.setAttribute("role","radio");
+        el.setAttribute("aria-checked","false");
+        el.tabIndex = 0;
+        const inicial = c.nome.trim().charAt(0).toUpperCase();
+        el.innerHTML = `
+          ${c.foto ? `<img src="${c.foto}" alt="Foto de ${c.nome}">`
+                   : `<div class="avatar">${inicial}</div>`}
+          <div class="nome">${c.nome}</div>
+          <span class="check">✔ Escolhido</span>`;
+        const selecionar = () => {
+          grade.querySelectorAll(".cand").forEach(o => {
+            o.classList.remove("sel"); o.setAttribute("aria-checked","false");
+          });
+          el.classList.add("sel");
+          el.setAttribute("aria-checked","true");
+          escolhas[cat.id] = c.nome;
+        };
+        el.addEventListener("click", selecionar);
+        el.addEventListener("keydown", e => {
+          if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selecionar(); }
+        });
+        grade.appendChild(el);
+      });
+      $cats.appendChild(sec);
+    });
+  }
+
+  $btn.addEventListener("click", async () => {
+    $erro.style.display = "none";
+    const faltando = CATEGORIAS.filter(c => !escolhas[c.id]).map(c => c.titulo);
+    if (faltando.length) {
+      $erro.textContent = "Falta escolher: " + faltando.join(", ");
+      $erro.style.display = "block";
+      $erro.scrollIntoView({behavior:"smooth", block:"center"});
+      return;
+    }
+    $btn.disabled = true;
+    $btn.textContent = "Enviando...";
+    try {
+      await db.ref("votos").push({
+        escolhas: escolhas,
+        quando: new Date().toISOString()
+      });
+      localStorage.setItem(JA_VOTOU_KEY, "1");
+      telaObrigado();
+      window.scrollTo({top:0, behavior:"smooth"});
+    } catch (e) {
+      $erro.textContent = "Não foi possível enviar o voto. Verifique sua internet e tente de novo.";
+      $erro.style.display = "block";
+      $btn.disabled = false;
+      $btn.textContent = "Confirmar meu voto";
+    }
+  });
+</script>
+</body>
+</html>
