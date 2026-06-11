@@ -12,7 +12,7 @@ const CATEGORIAS = [
     candidatos: [
       { nome: "Candidata 1", foto: null },
       { nome: "Candidata 2", foto: null },
-      { nome: "Candidata 3", foto: "teste_armando.jpg" },
+      { nome: "Armando Eigo Pimentel", foto: "teste_armando.jpg" },
     ],
   },
   {
