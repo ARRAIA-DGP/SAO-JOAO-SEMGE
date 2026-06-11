@@ -12,7 +12,7 @@ const CATEGORIAS = [
     candidatos: [
       { nome: "Candidata 1", foto: null },
       { nome: "Candidata 2", foto: null },
-      { nome: "Candidata 3", foto: "Q:\ASSESSORIA_TECNICA_DGP\ARMANDO\SITE FESTA SÃO JOÃO SEMGE\sao-joao-semge\fotos/teste_armando.jpg" },
+      { nome: "Candidata 3", foto: "teste_armando.jpeg" },
     ],
   },
   {
