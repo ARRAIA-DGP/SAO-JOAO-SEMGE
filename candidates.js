@@ -22,7 +22,7 @@ const CATEGORIAS = [
     candidatos: [
       
       { nome: "Martins - CGF", foto: "martins.jpg" },
-      { nome: "Armando - DGP", foto: "teste_armando.jpg" },
+      { nome: "Armando - DGP", foto: "armando.jpg" },
     ],
   },
   {
