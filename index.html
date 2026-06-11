@@ -69,7 +69,7 @@
   }
   .cat-titulo h2{font-family:'Rye',serif;font-weight:400;font-size:1.45rem;color:var(--xadrez)}
   .cat-titulo .emoji{font-size:1.5rem}
-  .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;padding:18px}
+  .grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;padding:18px}
   .cand{
     border:3px solid #e8d9bd;border-radius:12px;background:#fffdf8;
     padding:14px 10px;text-align:center;cursor:pointer;
@@ -79,11 +79,11 @@
   .cand:focus-visible{outline:3px solid var(--fogueira);outline-offset:2px}
   .cand.sel{border-color:var(--verde);box-shadow:0 0 0 3px rgba(63,157,107,.25)}
   .cand img,.cand .avatar{
-    width:96px;height:96px;border-radius:50%;object-fit:cover;
+    width:100%;aspect-ratio:1/1;border-radius:10px;object-fit:cover;
     display:flex;align-items:center;justify-content:center;
     margin:0 auto 10px;border:3px solid var(--milho);background:#fff;
   }
-  .cand .avatar{font-family:'Rye',serif;font-size:2.2rem;color:var(--fogueira)}
+  .cand .avatar{font-family:'Rye',serif;font-size:3rem;color:var(--fogueira)}
   .cand .nome{font-weight:800;font-size:.95rem}
   .cand .check{
     display:inline-block;margin-top:8px;font-size:.78rem;font-weight:800;
